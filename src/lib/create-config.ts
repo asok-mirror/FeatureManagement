@@ -104,7 +104,7 @@ function loadUI(options: IUnleashOptions): IUIConfig {
 
     ui.flags = {
         E: true,
-        ENABLE_DARK_MODE_SUPPORT: false,
+        ENABLE_DARK_MODE_SUPPORT: true,
     };
     return mergeAll([uiO, ui]);
 }
@@ -178,7 +178,7 @@ const defaultServerOption: IServerOption = {
 };
 
 const defaultVersionOption: IVersionOption = {
-    url: process.env.UNLEASH_VERSION_URL || 'https://version.unleash.run',
+    url: process.env.UNLEASH_VERSION_URL || '4.17.0',
     enable: parseEnvVarBoolean(process.env.CHECK_VERSION, true),
 };
 
@@ -203,7 +203,7 @@ const defaultEmail: IEmailOption = {
     host: process.env.EMAIL_HOST,
     secure: parseEnvVarBoolean(process.env.EMAIL_SECURE, false),
     port: parseEnvVarNumber(process.env.EMAIL_PORT, 587),
-    sender: process.env.EMAIL_SENDER || 'noreply@unleash-hosted.com',
+    sender: process.env.EMAIL_SENDER || 'asok@dal.ca',
     smtpuser: process.env.EMAIL_USER,
     smtppass: process.env.EMAIL_PASSWORD,
 };
