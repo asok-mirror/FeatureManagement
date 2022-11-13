@@ -57,7 +57,7 @@ export default class VersionService {
         this.settingStore = settingStore;
         this.current = {
             oss: version,
-            enterprise: enterpriseVersion || '',
+            enterprise: enterpriseVersion || '4.17.0',
         };
         this.enabled = versionCheck.enable;
         this.versionCheckUrl = versionCheck.url;
@@ -85,33 +85,40 @@ export default class VersionService {
     }
 
     async checkLatestVersion(): Promise<void> {
-        if (this.enabled) {
-            try {
-                const res = await fetch(this.versionCheckUrl, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        versions: this.current,
-                        instanceId: this.instanceId,
-                    }),
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                if (res.ok) {
-                    const data = (await res.json()) as IVersionResponse;
-                    this.latest = {
-                        oss: data.versions.oss,
-                        enterprise: data.versions.enterprise,
-                    };
-                    this.isLatest = data.latest;
-                } else {
-                    this.logger.info(
-                        `Could not check newest version. Status: ${res.status}`,
-                    );
-                }
-            } catch (err) {
-                this.logger.info('Could not check newest version', err);
-            }
-        }
+        this.latest = {
+            oss: '4.17.0',
+            enterprise: '4.17.0',
+        };
     }
+
+    // async checkLatestVersion(): Promise<void> {
+    //     if (this.enabled) {
+    //         try {
+    //             const res = await fetch(this.versionCheckUrl, {
+    //                 method: 'POST',
+    //                 body: JSON.stringify({
+    //                     versions: this.current,
+    //                     instanceId: this.instanceId,
+    //                 }),
+    //                 headers: { 'Content-Type': 'application/json' },
+    //             });
+    //             if (res.ok) {
+    //                 const data = (await res.json()) as IVersionResponse;
+    //                 this.latest = {
+    //                     oss: data.versions.oss,
+    //                     enterprise: data.versions.enterprise,
+    //                 };
+    //                 this.isLatest = data.latest;
+    //             } else {
+    //                 this.logger.info(
+    //                     `Could not check newest version. Status: ${res.status}`,
+    //                 );
+    //             }
+    //         } catch (err) {
+    //             this.logger.info('Could not check newest version', err);
+    //         }
+    //     }
+    // }
 
     getVersionInfo(): IVersionHolder {
         return {
