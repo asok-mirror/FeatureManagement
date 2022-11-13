@@ -121,8 +121,9 @@ export default class ProjectService {
         this.logger = config.getLogger('services/project-service.js');
     }
 
-    async getProjects(query?: IProjectQuery): Promise<IProjectWithCount[]> {
-        return this.store.getProjectsWithCounts(query);
+    async getProjects(query?: IProjectQuery): Promise<IProject[]> {
+        //return this.store.getProjectsWithCounts(query);
+        return this.store.getAll();
     }
 
     async getProject(id: string): Promise<IProject> {
@@ -130,7 +131,7 @@ export default class ProjectService {
     }
 
     async createProject(
-        newProject: Pick<IProject, 'id' | 'name'>,
+        newProject: IProject,
         user: IUser,
     ): Promise<IProject> {
         const data = await projectSchema.validateAsync(newProject);
@@ -270,7 +271,7 @@ export default class ProjectService {
     }
 
     async validateId(id: string): Promise<boolean> {
-        await nameType.validateAsync(id);
+        //await nameType.validateAsync(id);
         await this.validateUniqueId(id);
         return true;
     }
