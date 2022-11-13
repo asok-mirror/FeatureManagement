@@ -94,7 +94,7 @@ const createProject = async (id: string, name: string): Promise<void> => {
         name: randomId(),
         email: `${randomId()}@example.com`,
     });
-    await app.services.projectService.createProject({ id, name }, user);
+    await app.services.projectService.createProject({ id, name, description: 'test desc' }, user);
 };
 
 test('should require a frontend token or an admin token', async () => {

@@ -87,7 +87,8 @@ test('should list all projects', async () => {
     await projectService.createProject(project, user);
     const projects = await projectService.getProjects();
     expect(projects).toHaveLength(2);
-    expect(projects.find((p) => p.name === project.name)?.memberCount).toBe(1);
+    //expect(projects.find((p) => p.name === project.name)?.memberCount).toBe(1);
+    expect(projects.find((p) => p.name === project.name)).toBe(1);
 });
 
 test('should create new project', async () => {
@@ -500,8 +501,8 @@ test('should fail if user is not authorized', async () => {
 });
 
 test('should change project when checks pass', async () => {
-    const projectA = { id: randomId(), name: randomId() };
-    const projectB = { id: randomId(), name: randomId() };
+    const projectA = { id: randomId(), name: randomId(), description: randomId() };
+    const projectB = { id: randomId(), name: randomId(), description: randomId() };
     const toggle = { name: randomId() };
 
     await projectService.createProject(projectA, user);
@@ -519,8 +520,8 @@ test('should change project when checks pass', async () => {
 });
 
 test('changing project should emit event even if user does not have a username set', async () => {
-    const projectA = { id: randomId(), name: randomId() };
-    const projectB = { id: randomId(), name: randomId() };
+    const projectA = { id: randomId(), name: randomId(), description: randomId() };
+    const projectB = { id: randomId(), name: randomId(), description: randomId() };
     const toggle = { name: randomId() };
     await projectService.createProject(projectA, user);
     await projectService.createProject(projectB, user);
@@ -537,8 +538,8 @@ test('changing project should emit event even if user does not have a username s
 }, 10000);
 
 test('should require equal project environments to move features', async () => {
-    const projectA = { id: randomId(), name: randomId() };
-    const projectB = { id: randomId(), name: randomId() };
+    const projectA = { id: randomId(), name: randomId(), description: randomId() };
+    const projectB = { id: randomId(), name: randomId(), description: randomId() };
     const environment = { name: randomId(), type: 'production' };
     const toggle = { name: randomId() };
 
@@ -909,6 +910,7 @@ test('Should allow bulk update of group permissions', async () => {
     const project = {
         id: 'bulk-update-project',
         name: 'bulk-update-project',
+        description: 'test desc'
     };
     await projectService.createProject(project, user.id);
     const groupStore = stores.groupStore;
@@ -985,6 +987,7 @@ test('Should allow bulk update of only groups', async () => {
     const project = {
         id: 'bulk-update-project-only',
         name: 'bulk-update-project-only',
+        description: 'test desc'
     };
     const groupStore = stores.groupStore;
 

@@ -19,6 +19,7 @@ import { contextFieldSchema } from './spec/context-field-schema';
 import { contextFieldsSchema } from './spec/context-fields-schema';
 import { createApiTokenSchema } from './spec/create-api-token-schema';
 import { createFeatureSchema } from './spec/create-feature-schema';
+import { createProjectSchema } from './spec/create-project-schema';
 import { createFeatureStrategySchema } from './spec/create-feature-strategy-schema';
 import { createInvitedUserSchema } from './spec/create-invited-user-schema';
 import { createUserSchema } from './spec/create-user-schema';
@@ -145,6 +146,7 @@ export const schemas = {
     contextFieldsSchema,
     createApiTokenSchema,
     createFeatureSchema,
+    createProjectSchema,
     createFeatureStrategySchema,
     createInvitedUserSchema,
     createUserSchema,
