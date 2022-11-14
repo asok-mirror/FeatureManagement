@@ -121,6 +121,51 @@ export default class ProjectService {
         this.logger = config.getLogger('services/project-service.js');
     }
 
+    // async getUsersByRole(projectId: string): Promise<JSON> {
+    //     return JSON.parse(`
+    //     {
+    //         "roles": [
+    //           {
+    //             "id": 4,
+    //             "name": "Owner",
+    //             "type": "project",
+    //             "description": "Users with this role have full control over the project, and can add and manage other users within the project context, manage feature toggles within the project, and control advanced project features like archiving and deleting the project."
+    //           },
+    //           {
+    //             "id": 5,
+    //             "name": "Member",
+    //             "type": "project",
+    //             "description": "Users with this role within a project are allowed to view, create and update feature toggles, but have limited permissions in regards to managing the projects user access and can not archive or delete the project."
+    //           },
+    //           {
+    //             "id": 522,
+    //             "name": "Developer",
+    //             "type": "custom",
+    //             "description": ""
+    //           },
+    //           {
+    //             "id": 523,
+    //             "name": "Demo",
+    //             "type": "custom",
+    //             "description": "Allows demo users access to the demo project"
+    //           }
+    //         ],
+    //         "users": [
+    //           {
+    //             "isAPI": false,
+    //             "id": 7807,
+    //             "email": "7b46687e7@unleash.run",
+    //             "imageUrl": "https://gravatar.com/avatar/21232f297a57a5a743894a0e4a801fc3?size=42&default=retro",
+    //             "seenAt": "2022-11-14T18:20:48.047Z",
+    //             "addedAt": "2022-11-14T18:21:19.613Z",
+    //             "roleId": 4
+    //           }
+    //         ],
+    //         "groups": []
+    //       }
+    //       `);
+    // }
+
     async getProjects(query?: IProjectQuery): Promise<IProject[]> {
         //return this.store.getProjectsWithCounts(query);
         return this.store.getAll();

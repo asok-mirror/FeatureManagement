@@ -114,6 +114,7 @@ import { upsertStrategySchema } from './spec/upsert-strategy-schema';
 import { URL } from 'url';
 import { userSchema } from './spec/user-schema';
 import { usersGroupsBaseSchema } from './spec/users-groups-base-schema';
+import { getProjectAccessSchema } from './spec/get-project-access-schema';
 import { usersSchema } from './spec/users-schema';
 import { usersSearchSchema } from './spec/users-search-schema';
 import { validateEdgeTokensSchema } from './spec/validate-edge-tokens-schema';
@@ -153,6 +154,7 @@ export const schemas = {
     dateSchema,
     edgeTokenSchema,
     emailSchema,
+    getProjectAccessSchema,
     environmentSchema,
     environmentsSchema,
     eventSchema,

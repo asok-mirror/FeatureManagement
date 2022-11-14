@@ -27,8 +27,6 @@ import { serializeDates } from '../../../types/serialize-dates';
 import { createResponseSchema } from '../../../openapi/util/create-response-schema';
 import { emptyResponse } from '../../../openapi/util/standard-responses';
 import { createRequestSchema } from '../../../openapi/util/create-request-schema';
-import { CreateProjectSchema } from '../../../openapi/spec/create-project-schema';
-import UserService from '../../../services/user-service';
 
 interface ProjectParams {
     projectId: string;
@@ -40,14 +38,11 @@ export default class ProjectApi extends Controller {
 
     private openApiService: OpenApiService;
 
-    private UserService: UserService;
-
     constructor(
         config: IUnleashConfig, services: IUnleashServices) {
         super(config);
         this.projectService = services.projectService;
         this.openApiService = services.openApiService;
-        this.UserService = services.userService;
 
         this.route({
             path: '',
@@ -94,6 +89,21 @@ export default class ProjectApi extends Controller {
             ],
         });
 
+        this.route({
+            method: 'get',
+            path: '/:projectId/access',
+            handler: this.getUsersByRole,
+            permission: NONE,
+            middleware: [
+                services.openApiService.validPath({
+                    tags: ['Projects'],
+                    operationId: 'getUsersByRole',
+                    // requestBody: createRequestSchema('createProjectSchema'),
+                    responses: { 200: createResponseSchema('getProjectAccessSchema') },
+                }),
+            ],
+        });
+
         this.use('/', new ProjectFeaturesController(config, services).router);
         this.use('/', new EnvironmentsController(config, services).router);
         this.use('/', new ProjectHealthReport(config, services).router);
@@ -128,12 +138,27 @@ export default class ProjectApi extends Controller {
         res.status(200).end();       
     }
 
+    async getUsersByRole(
+        req: Request,
+        res: Response,
+    ): Promise<void> {
+        const { projectId } = req.params;
+        const accessDetails = await this.projectService.getAccessToProject(
+            projectId
+        ); 
+        this.openApiService.respondWithValidation(
+            201,
+            res,
+            projectsSchema.$id,
+            serializeDates(accessDetails),
+        );   
+    }
+
     async createProject(
         req: IAuthRequest,
         res: Response<ProjectSchema>,
     ): Promise<void> {
         const { id, name, description } = req.body;
-       // const user = await this.UserService.getUser(user)
         const created = await this.projectService.createProject(
             {
                 id: id,
