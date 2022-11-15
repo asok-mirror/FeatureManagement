@@ -3,7 +3,6 @@ import Controller from '../controller';
 import { IUnleashConfig, IUnleashServices } from '../../types';
 import { Logger } from '../../logger';
 import AddonService from '../../services/addon-service';
-
 import { extractUsername } from '../../util/extract-user';
 import {
     CREATE_ADDON,

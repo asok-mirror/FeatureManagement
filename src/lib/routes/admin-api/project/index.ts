@@ -3,6 +3,7 @@ import Controller from '../../controller';
 import { IUnleashConfig } from '../../../types/option';
 import { IProject } from '../../../types/model';
 import User, { IUser } from '../../../types/user';
+import { AccessService } from '../../../services/access-service';
 import { IUnleashServices } from '../../../types/services';
 import ProjectFeaturesController from './features';
 import EnvironmentsController from './environments';
@@ -27,18 +28,21 @@ import { serializeDates } from '../../../types/serialize-dates';
 import { createResponseSchema } from '../../../openapi/util/create-response-schema';
 import { emptyResponse } from '../../../openapi/util/standard-responses';
 import { createRequestSchema } from '../../../openapi/util/create-request-schema';
-
+import { extractUsername } from '../../../util/extract-user';
 
 export default class ProjectApi extends Controller {
     private projectService: ProjectService;
 
     private openApiService: OpenApiService;
 
+    private accessService: AccessService;
+
     constructor(
         config: IUnleashConfig, services: IUnleashServices) {
         super(config);
         this.projectService = services.projectService;
         this.openApiService = services.openApiService;
+        this.accessService = services.accessService;
 
         this.route({
             path: '',
@@ -96,6 +100,22 @@ export default class ProjectApi extends Controller {
                     operationId: 'getUsersByRole',
                     // requestBody: createRequestSchema('createProjectSchema'),
                     responses: { 200: createResponseSchema('getProjectAccessSchema') },
+                }),
+            ],
+        });
+
+        this.route({
+            method: 'post',
+            path: '/:projectId/role/:roleId/access',
+            handler: this.addAccessToProject,
+            permission: CREATE_PROJECT,
+            middleware: [
+                services.openApiService.validPath({
+                    tags: ['Projects'],
+                    operationId: 'addAccessToProject',
+                    responses: {
+                        200: emptyResponse,
+                    },
                 }),
             ],
         });
@@ -173,5 +193,22 @@ export default class ProjectApi extends Controller {
             projectSchema.$id,
             serializeDates(created),
         );
+    }
+
+    async addAccessToProject(
+        req: IAuthRequest,
+        res: Response<void>,
+    ): Promise<void> {
+        const { projectId, roleId } = req.params;    
+        const createdBy = extractUsername(req);
+        const { users, groups } = req.body; 
+        await this.accessService.addAccessToProject(
+            users,
+            groups,
+            projectId,
+            +roleId,
+            createdBy
+        );
+        res.status(200).end();  
     }
 }

@@ -4,13 +4,10 @@ import { IUnleashConfig, IUnleashServices } from '../../types';
 import { Logger } from '../../logger';
 import { AccessService } from '../../services/access-service';
 import { NONE } from '../../types/permissions';
-import { IAuthRequest } from '../unleash-types';
-import { createRequestSchema } from '../../openapi/util/create-request-schema';
 import { createResponseSchema } from '../../openapi/util/create-response-schema';
 import { OpenApiService } from '../../services/openapi-service';
 import { RoleSchema, roleSchema } from '../../openapi/spec/role-schema';
 import { serializeDates } from '../../types/serialize-dates';
-import { emptyResponse } from '../../openapi/util/standard-responses';
 
 type AccessServices = Pick<IUnleashServices, 'accessService' | 'openApiService'>;
 
@@ -46,7 +43,7 @@ class AccessController extends Controller {
                     },
                 }),
             ],
-        });      
+        });                 
       
     }
 
