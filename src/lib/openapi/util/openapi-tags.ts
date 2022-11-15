@@ -65,6 +65,11 @@ const OPENAPI_TAGS = [
             'Create, update, and delete [Unleash projects](https://docs.getunleash.io/user_guide/projects).',
     },
     {
+        name: 'Access',
+        description:
+            'Evaluate accessess',
+    },
+    {
         name: 'Public signup tokens',
         description:
             'Create, update, and delete [Unleash Public Signup tokens](https://docs.getunleash.io/reference/public-signup-tokens).',
