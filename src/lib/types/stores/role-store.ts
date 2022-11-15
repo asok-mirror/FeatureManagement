@@ -22,6 +22,7 @@ export interface IRoleStore extends Store<ICustomRole, number> {
     delete(id: number): Promise<void>;
     getRoles(): Promise<IRole[]>;
     getRoleByName(name: string): Promise<IRole>;
+    getRoleWithId(roleId: number): Promise<IRole>;
     getRolesForProject(projectId: string): Promise<IRole[]>;
     removeRolesForProject(projectId: string): Promise<void>;
     getProjectRoles(): Promise<IRole[]>;

@@ -217,6 +217,10 @@ export class AccessService {
         return this.roleStore.getRoleByName(roleName);
     }
 
+    async getRoleById(roleId: number): Promise<IRole> {
+        return this.roleStore.getRoleWithId(roleId);
+    }
+
     async setUserRootRole(
         userId: number,
         role: number | RoleName,

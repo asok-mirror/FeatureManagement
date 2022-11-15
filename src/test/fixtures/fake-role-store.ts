@@ -48,6 +48,10 @@ export default class FakeRoleStore implements IRoleStore {
         return this.roles.find((r) => (r.name = name));
     }
 
+    async getRoleWithId(roleId: number): Promise<IRole> {
+        return this.roles.find((r) => (r.id = roleId));
+    }
+
     getRolesForProject(projectId: string): Promise<IRole[]> {
         throw new Error('Method not implemented.');
     }

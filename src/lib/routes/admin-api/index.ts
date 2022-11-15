@@ -22,6 +22,7 @@ import UserFeedbackController from './user-feedback';
 import UserSplashController from './user-splash';
 import ProjectApi from './project';
 import { EnvironmentsController } from './environments';
+import AccessController from './access';
 import ConstraintsController from './constraints';
 import PatController from './user/pat';
 import { PublicSignupController } from './public-signup';
@@ -106,6 +107,10 @@ class AdminApi extends Controller {
         this.app.use(
             '/constraints',
             new ConstraintsController(config, services).router,
+        );
+        this.app.use(
+            '/roles',
+            new AccessController(config, services).router,
         );
         this.app.use(
             '/invite-link',

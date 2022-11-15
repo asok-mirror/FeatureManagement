@@ -28,10 +28,6 @@ import { createResponseSchema } from '../../../openapi/util/create-response-sche
 import { emptyResponse } from '../../../openapi/util/standard-responses';
 import { createRequestSchema } from '../../../openapi/util/create-request-schema';
 
-interface ProjectParams {
-    projectId: string;
-}
-
 
 export default class ProjectApi extends Controller {
     private projectService: ProjectService;
@@ -92,7 +88,7 @@ export default class ProjectApi extends Controller {
         this.route({
             method: 'get',
             path: '/:projectId/access',
-            handler: this.getUsersByRole,
+            handler: this.getAccessToProject,
             permission: NONE,
             middleware: [
                 services.openApiService.validPath({
@@ -138,7 +134,7 @@ export default class ProjectApi extends Controller {
         res.status(200).end();       
     }
 
-    async getUsersByRole(
+    async getAccessToProject(
         req: Request,
         res: Response,
     ): Promise<void> {

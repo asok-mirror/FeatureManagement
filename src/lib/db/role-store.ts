@@ -182,5 +182,9 @@ export default class RoleStore implements IRoleStore {
         return this.db(T.ROLES).where({ name }).first();
     }
 
+    async getRoleById(roleId: number): Promise<IRole> {
+        return this.db(T.ROLES).where({ id: roleId }).first();
+    }
+
     destroy(): void {}
 }
