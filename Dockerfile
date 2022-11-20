@@ -1,41 +1,30 @@
 ARG NODE_VERSION=16-alpine
 
-FROM --platform=$BUILDPLATFORM node:$NODE_VERSION as frontend_builder
-
-WORKDIR /frontend
-
-COPY ./frontend /frontend
-
-RUN yarn install --frozen-lockfile
-
-FROM node:$NODE_VERSION as builder
+FROM node:$NODE_VERSION 
 
 WORKDIR /unleash
 
 COPY . /unleash
 
-RUN yarn config set network-timeout 300000
-
 RUN yarn install --frozen-lockfile --ignore-scripts  && yarn run build && yarn run local:package
 
-COPY --from=frontend_builder /frontend/build /unleash/build/frontend/build
+# RUN yarn install --frozen-lockfile
 
-WORKDIR /unleash/docker
+# FROM node:$NODE_VERSION as builder
 
-RUN yarn install --frozen-lockfile --production=true
+WORKDIR /unleash/frontend
 
-FROM node:$NODE_VERSION
-
-ENV NODE_ENV production
+RUN yarn install --frozen-lockfile
 
 WORKDIR /unleash
 
-COPY --from=builder /unleash/docker /unleash
+RUN yarn config set network-timeout 300000
 
-RUN rm -rf /usr/local/lib/node_modules/npm/
+# RUN mv frontend/build_copy build
+# RUN mv dist_copy distcd 
 
 EXPOSE 4242
 
-USER node
+# USER node
 
-CMD ["node", "index.js"]
+CMD ["node", "./dist/server.js"]
