@@ -1,9 +1,5 @@
-# Feature Management - Unleash
+# Feature Management - Customized Unleash
 Feature toggles make it easy to test how your code works with real production data without the fear that you'll accidentally break your users' experience. It also helps your team work on multiple features in parallel without each maintaining an separate feature branch.
-
-I forked this from Unleash one of the feature management tool. 
-
-<br/>
 
 ## What Changes are here
 
