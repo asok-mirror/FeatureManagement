@@ -16,7 +16,13 @@ npm run build
 npm run start:dev
 ```
 ## Docker 
+
+Fell free to change the image and container name 
+
 ```bash
-tbu
+
+docker build . -t asok/unleash --no-cache 
+
+docker run  --name=asok-unleash -p 4242:4242 --env=DATABASE_SSL=false --env=DATABASE_USERNAME=unleash_user --env=DATABASE_HOST=10.0.0.8 --env=DATABASE_NAME=unleash --env=DATABASE_PASSWORD=passord --env=AUTH_USER=admin --env=AUTH_PASSWORD=asok asok/unleash:latest 
 
 ```
