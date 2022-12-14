@@ -122,12 +122,12 @@ class UserService {
         if (userCount === 0) {
             // create default admin user
             try {
-                const pwd = 'unleash4all';
+                const pwd = process.env.AUTH_PASSWORD || 'unleash4all';
                 this.logger.info(
                     `Creating default user "admin" with password "${pwd}"`,
                 );
                 const user = await this.store.insert({
-                    username: 'admin',
+                    username: process.env.AUTH_USER || 'admin',
                 });
                 const passwordHash = await bcrypt.hash(pwd, saltRounds);
                 await this.store.setPasswordHash(user.id, passwordHash);

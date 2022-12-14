@@ -28,6 +28,7 @@
   "main": "./dist/lib/server-impl.js",
   "scripts": {
     "start": "node ./dist/server.js",
+    "start:prod": "node ./dist/server-dev.js",
     "prestart:dev": "yarn run clean",
     "start:dev": "SET NODE_ENV=development & tsc-watch --onSuccess & node ./dist/server-dev.js",
     "copy-templates": "copyfiles -u 1 src/mailtemplates/**/*.mustache dist/",
