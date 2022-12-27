@@ -17,7 +17,7 @@ npm run start:dev
 ```
 ## Docker 
 
-Fell free to change the image and container names 
+Feel free to change the image and container names 
 
 ```bash
 
